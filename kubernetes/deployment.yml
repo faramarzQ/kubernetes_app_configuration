@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-app-using-configmap
+  namespace: config-secret-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-app-using-configmap
+  template:
+    metadata:
+      labels:
+        app: go-app-using-configmap
+    spec:
+      containers:
+      - name: go-app-using-configmap
+        image: configmap-go:v1.4
+        env:
+          - name: FIRST_VAR
+            value: "From deployment"
+          - name: SECOND_VAR
+            valueFrom:
+                configMapKeyRef:
+                  name: go-app-configs 
+                  key: SECOND_VAR
+          - name: THIRD_VAR
+            valueFrom:
+                secretKeyRef:
+                  name: go-app-secret 
+                  key: THIRD_VAR

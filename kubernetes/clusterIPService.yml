@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: go-app-using-configmap-clusterip
+  namespace: config-secret-example
+  labels:
+    app: go-app-using-configmap-clusterip
+spec:
+  selector:
+    app: go-app-using-configmap
+  type: ClusterIP
+  ports:
+  - name: go-app-using-configmap-port
+    port: 8090
+    targetPort:  8090
